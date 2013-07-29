@@ -23,4 +23,5 @@
     (setq sta-abbrev-cache (ht ("ed" '("example-defun"))))
     (insert "ed")
     (sta-expand-abbrev-at-point)
-    (should (equal (thing-at-point 'symbol) "example-defun"))))
+    (goto-char (point-min))
+    (should (equal (thing-at-point 'sexp) "(example-defun )"))))

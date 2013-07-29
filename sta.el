@@ -17,7 +17,7 @@
         (setq defun-abbrevs (sta-create-abbrev-cache))
       (setq defun-abbrevs sta-abbrev-cache))
     (delete-region (car bounds) (cdr bounds))
-    (insert (car (ht-get defun-abbrevs abbrev)))))
+    (insert "(" (car (ht-get defun-abbrevs abbrev)) " )")))
 
 (defun sta-create-abbrev-cache (&optional vector-of-symbols)
   (let ((defun-abbrevs (ht-create)))
@@ -48,5 +48,6 @@
                (s-split "-+" symbol) "")))
 
 (setq sta-abbrev-cache (sta-create-abbrev-cache))
+(global-set-key (kbd "C-c M-/") 'sta-expand-abbrev-at-point)
 
 (provide 'sta)
