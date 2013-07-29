@@ -18,8 +18,9 @@
       (should (equal '("example-different" "example-defun")
                      (ht-get example-hash "ed"))))))
 
-
-(setq sta-defun-abbrevs (sta-create-abbrev-cache))
-
-
-(setq sta-temp (ht-get sta-defun-abbrevs "scac"))
+(ert-deftest expand-abbrev-with-single-symbol ()
+  (with-temp-buffer
+    (setq sta-abbrev-cache (ht ("ed" '("example-defun"))))
+    (insert "ed")
+    (sta-expand-abbrev-at-point)
+    (should (equal (thing-at-point 'symbol) "example-defun"))))

@@ -3,7 +3,21 @@
 
 ;; (global-set-key (kbd "C-c <f5>") (lambda ()
 ;;                                    (interactive)
-;;                                    (compile "emacs -batch -L /Users/dgempesaw/.emacs.d/elpa/ht-0.8/ -L /Users/dgempesaw/.emacs.d/elpa/s-1.6.1/ /opt/dotemacs/elpa/ -L /opt/symbol-to-abbrev/ -l ert -l sta-ert.el -f ert-run-tests-batch-and-exit")))
+;;                                    (compile "emacs -batch -L /Users/dgempesaw/.emacs.d/elpa/ht-0.8/ -L /Users/dgempesaw/.emacs.d/elpa/s-1.6.1/ /opt/dotemacs/elpa/ -L /opt/sta/ -l ert -l sta-ert.el -f ert-run-tests-batch-and-exit")))
+
+(defvar sta-abbrev-cache nil
+  "The cache of abbrev => defun relationships")
+
+(defun sta-expand-abbrev-at-point ()
+  (interactive)
+  (let ((defun-abbrevs)
+        (abbrev (thing-at-point 'word))
+        (bounds (bounds-of-thing-at-point 'word)))
+    (if (eq nil sta-abbrev-cache)
+        (setq defun-abbrevs (sta-create-abbrev-cache))
+      (setq defun-abbrevs sta-abbrev-cache))
+    (delete-region (car bounds) (cdr bounds))
+    (insert (car (ht-get defun-abbrevs abbrev)))))
 
 (defun sta-create-abbrev-cache (&optional vector-of-symbols)
   (let ((defun-abbrevs (ht-create)))
@@ -32,5 +46,7 @@
                   ((string= it dash) "-")
                   (t (substring it 0 1))))
                (s-split "-+" symbol) "")))
+
+(setq sta-abbrev-cache (sta-create-abbrev-cache))
 
 (provide 'sta)
