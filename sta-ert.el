@@ -7,6 +7,9 @@
 (ert-deftest simple-symbols-get-added ()
   (should (string= (sta-symbol-to-abbrev 'test-symbol-name) "tsn")))
 
+(ert-deftest dash-symbols-get-added ()
+  (should (string= (sta-symbol-to-abbrev '-example) "-e")))
+
 (ert-deftest dash-dash-symbols-get-added ()
   (should (string= (sta-symbol-to-abbrev '--example-symbol) "-es")))
 

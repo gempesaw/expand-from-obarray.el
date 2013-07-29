@@ -42,7 +42,7 @@
     (setq symbol (replace-regexp-in-string "^--" (concat dash "-") symbol))
     (mapconcat (lambda (it)
                  (cond
-                  ((string= it "") "")
+                  ((string= it "") "-")
                   ((string= it dash) "-")
                   (t (substring it 0 1))))
                (s-split "-+" symbol) "")))
