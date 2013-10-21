@@ -1,4 +1,7 @@
-sta: symbol-to-abbrev
-===
+# expand-from-obarray.el
 
-An elisp package that expands (your-long-function-name) from ylfn
+Expand (your-long-function-name) from ylfn.
+
+```elisp
+(global-set-key (kbd "C-c M-/") 'efo-expand-abbrev-at-point)
+```
